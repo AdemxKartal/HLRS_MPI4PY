@@ -3,7 +3,7 @@ from mpi4py import MPI
 #run with: mpiexec -n 2 python firstExample.py
 #--------------------------------------------------------------------------------------
 
-
+#test
 comm = MPI.COMM_WORLD #!! make it without comm
 n = 1
 size = MPI.COMM_WORLD.Get_size()
