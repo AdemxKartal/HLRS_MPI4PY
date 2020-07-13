@@ -21,11 +21,11 @@ status = MPI.Status()
 for counter in range(0,number_of_messages):
     if(rank==proc_A):
         MPI.COMM_WORLD.Send([buffer,MPI.FLOAT], dest= proc_B, tag=ping)
-        MPI.COMM_WORLD.Recv([buffer,MPI.FLOAT], source= proc_B, tag=pong)
+        MPI.COMM_WORLD.Recv([buffer,MPI.FLOAT], source= proc_B, tag=pong,status=status)
 
     elif(rank==proc_B):
         MPI.COMM_WORLD.Send([buffer,MPI.FLOAT],dest=proc_A,tag=pong)
-        MPI.COMM_WORLD.Recv([buffer,MPI.FLOAT],source=proc_A,tag=ping)
+        MPI.COMM_WORLD.Recv([buffer,MPI.FLOAT],source=proc_A,tag=ping,status=status)
 
 finish =MPI.Wtime()
 if(rank==proc_A):
