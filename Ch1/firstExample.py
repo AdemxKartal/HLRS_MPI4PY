@@ -10,9 +10,8 @@ my_rank = MPI.COMM_WORLD.Get_rank()
 if(my_rank ==0):
     n= input("enter the number of intervals (n): ")
 
-#n = comm.bcast(n,root=0)
 n= MPI.COMM_WORLD.bcast(n,root=0)
 result = 1*my_rank*n
-print('here is my_rank = ', my_rank,'result = ', result)
+print('here is my_rank: ', my_rank,'result = ', result)
 
 
