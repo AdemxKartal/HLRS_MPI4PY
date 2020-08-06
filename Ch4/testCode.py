@@ -1,4 +1,6 @@
 #run with: mpiexec -n 2 python testCode.py
+#run with: mpiexec --use-hwthread-cpus python testCode.py
+
 from mpi4py import MPI
 import numpy as np
 
@@ -34,8 +36,6 @@ buf = 0
 #print('type of buffer: ', type(buffer), 'value of buffer: ', buffer)
 
 for counter in range(0,size):
-
-
     req= MPI.COMM_WORLD.Send([buf,MPI.INT], dest= right, tag=to_right)
     recv=MPI.COMM_WORLD.Recv([buf,MPI.INT], source= left, tag=to_right)
     #print('type of recv: ', type(recv), 'value of recv: ',recv)
