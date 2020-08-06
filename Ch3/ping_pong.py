@@ -2,8 +2,7 @@
 from mpi4py import MPI
 import numpy as np
 
-#buffer = np.array([0.0,0.0],dtype=float)
-buffer= np.array([1,2,3],dtype='f')
+buffer= np.array([1,2],dtype='f')
 
 proc_A = 0
 proc_B = 1
@@ -28,6 +27,7 @@ for counter in range(0,number_of_messages):
 
 
 finish =MPI.Wtime()
+
 if(my_rank ==proc_A):
     time = finish-start
     print('time for one messsage: ',(time/(2*number_of_messages)*1e6))
