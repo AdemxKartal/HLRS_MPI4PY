@@ -35,13 +35,18 @@ buf = 0
 
 for counter in range(0,size):
 
-    print('amk type of buffer: ', type(buffer), 'value of buffer: ', buffer)
-    print('---------------------------------------------------------------------')
 
     req= MPI.COMM_WORLD.Send([buf,MPI.INT], dest= right, tag=to_right)
     recv=MPI.COMM_WORLD.Recv([buf,MPI.INT], source= left, tag=to_right)
-    print('type of recv: ', type(recv), 'value of recv: ',recv)
+    #print('type of recv: ', type(recv), 'value of recv: ',recv)
 
+    #buf = buf + 1
+
+    if(buf>(size-1)):
+        buf=0
+    print('---------------------------------------------------------------------')
+    print('amk type of buffer: ', type(buffer), 'value of buffer: ', buffer)
+    print('---------------------------------------------------------------------')
 
     #req= MPI.COMM_WORLD.Send([buffer,MPI.INT], dest= right, tag=to_right)
     #req=MPI.COMM_WORLD.Recv([buffer,MPI.INT], source= left, tag=to_right)
