@@ -26,8 +26,10 @@ sum= int()
 rcv_buf=my_rank
 snd_buffer=my_rank
 buffer= int()
+
 for counter in range(0,size):
     req= MPI.COMM_WORLD.Send([buffer,MPI.INT], dest= right, tag=to_right)
+    print('test print')
     ret_rcv=MPI.COMM_WORLD.Recv([buffer,MPI.INT], source= left, tag=to_right,status=status)
     #ret_rcv=MPI.COMM_WORLD.Recv([rcv_buf,MPI.INT], source= left, tag=to_right,status=status)
     #print('type of ret_recv: ', type(ret_rcv), 'value of ret_rcv: ', ret_rcv)
