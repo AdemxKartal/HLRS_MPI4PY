@@ -25,8 +25,6 @@ for counter in range(0,number_of_messages):
         MPI.COMM_WORLD.recv(source=proc_A,tag=ping,status=status)
         MPI.COMM_WORLD.send(snd_data,dest=proc_A,tag=pong)
 
-
-
 finish =MPI.Wtime()
 
 if(my_rank ==proc_A):
