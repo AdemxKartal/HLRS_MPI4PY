@@ -21,8 +21,8 @@ status = MPI.Status()
 
 for counter in range(0,number_of_messages):
     if(my_rank ==proc_A):
-        MPI.COMM_WORLD.Send([buffer,MPI.INT], dest= proc_B, tag=ping)
-        MPI.COMM_WORLD.Recv([buffer,MPI.INT], source= proc_B, tag=pong,status=status)
+        MPI.COMM_WORLD.Send(buffer, dest= proc_B, tag=ping)
+        MPI.COMM_WORLD.Recv(buffer, source= proc_B, tag=pong,status=status)
 
     elif(my_rank ==proc_B):
         MPI.COMM_WORLD.Recv(buffer,source=proc_A,tag=ping,status=status)
