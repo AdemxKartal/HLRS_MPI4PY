@@ -1,8 +1,7 @@
 #run with: mpiexec -n 2 python ping_pong.py
+# mpiexec --use-hwthread-cpus python3 ping_pong.py
+
 from mpi4py import MPI
-import numpy as np
-
-
 snd_data= 1
 proc_A = 0
 proc_B = 1
