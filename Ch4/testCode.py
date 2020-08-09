@@ -21,39 +21,26 @@ my_rank = MPI.COMM_WORLD.Get_rank()
 
 right = (my_rank+1)%size
 left=(my_rank-1+size)%size
+print('value of left: ',left)
+print('value of right: ', right)
 status = MPI.Status()
 to_right = 201
 sum= int()
 
-rcv_buf=my_rank
-snd_buffer=my_rank
-buffer= my_rank
-buf = int()
-buf = 0
-#print('type of my_rank: ',type(my_rank),'value of my_rank: ', my_rank)
-#buffer = my_rank
-#print('---------------------------------------------------------------------')
-#print('type of buffer: ', type(buffer), 'value of buffer: ', buffer)
+
+buf = 1
+rcv_buf=2
+
+
+
 
 for counter in range(0,size):
-    req= MPI.COMM_WORLD.Send([buf,MPI.INT], dest= right, tag=to_right)
-    recv=MPI.COMM_WORLD.Recv([buf,MPI.INT], source= left, tag=to_right)
-    #print('type of recv: ', type(recv), 'value of recv: ',recv)
+    req=MPI.COMM_WORLD.isend(buf, dest= right, tag=to_right)
 
-    #buf = buf + 1
+    MPI.COMM_WORLD.recv(rcv_buf, source= left, tag=to_right)
+    req.wait()
+    buf = rcv_buf
+    sum= sum+rcv_buf
 
-    if(buf>(size-1)):
-        buf=0
-    print('---------------------------------------------------------------------')
-    print('amk type of buffer: ', type(buffer), 'value of buffer: ', buffer)
-    print('---------------------------------------------------------------------')
-
-    #req= MPI.COMM_WORLD.Send([buffer,MPI.INT], dest= right, tag=to_right)
-    #req=MPI.COMM_WORLD.Recv([buffer,MPI.INT], source= left, tag=to_right)
-
-    #ret_rcv=MPI.COMM_WORLD.Recv([buffer,MPI.INT], source= left, tag=to_right,status=status)
-    #ret_rcv=MPI.COMM_WORLD.Recv([rcv_buf,MPI.INT], source= left, tag=to_right,status=status)
-    #print('type of ret_recv: ', type(ret_rcv), 'value of ret_rcv: ', ret_rcv)
-    #snd_buffer=ret_rcv
-    #print('rcv_buf: ', rcv_buf)
+print('sum of ranks: ', sum)
 
