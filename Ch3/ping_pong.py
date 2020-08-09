@@ -3,10 +3,9 @@ from mpi4py import MPI
 import numpy as np
 
 
-buffer= np.array([1,2],dtype='i')
+#buffer= np.array([1],dtype='i')
 #buffer = int()
-#buffer= np.array([1,2],dtype='f')
-#buffer = 1
+buffer = 1.3
 proc_A = 0
 proc_B = 1
 ping=17
@@ -21,12 +20,12 @@ status = MPI.Status()
 
 for counter in range(0,number_of_messages):
     if(my_rank ==proc_A):
-        MPI.COMM_WORLD.Send(buffer, dest= proc_B, tag=ping)
-        MPI.COMM_WORLD.Recv(buffer, source= proc_B, tag=pong,status=status)
+        MPI.COMM_WORLD.send(buffer, dest= proc_B, tag=ping)
+        #MPI.COMM_WORLD.recv(buffer, source= proc_B, tag=pong,status=status)
 
     elif(my_rank ==proc_B):
-        MPI.COMM_WORLD.Recv(buffer,source=proc_A,tag=ping,status=status)
-        MPI.COMM_WORLD.Send(buffer,dest=proc_A,tag=pong)
+        #MPI.COMM_WORLD.recv(buffer,source=proc_A,tag=ping,status=status)
+        MPI.COMM_WORLD.send(buffer,dest=proc_A,tag=pong)
 
 
 
