@@ -25,7 +25,7 @@ for counter in range(0,number_package_sizes):
     elif(my_rank ==proc_B):
             MPI.COMM_WORLD.recv(source=proc_A,tag=ping,status=status)
             MPI.COMM_WORLD.send(buffer,dest=proc_A,tag=pong)
-    #print('first loop')
+
     start = MPI.Wtime()
     for counter2 in range(0,number_of_messages):
         if(my_rank==proc_A):
@@ -35,7 +35,7 @@ for counter in range(0,number_package_sizes):
         elif(my_rank==proc_B):
             MPI.COMM_WORLD.recv(source=proc_A,tag=ping,status=status)
             MPI.COMM_WORLD.send(buffer,dest=proc_A,tag=pong)
-        #print('second loop')
+
 finish =MPI.Wtime()
 if(my_rank==proc_A):
     time = finish-start
