@@ -20,23 +20,15 @@ left=(my_rank-1+size)%size
 #   left = size - 1
 arr_status = [2]
 arr_request = [2]
-#status = MPI.Status(arr_status)
+
 sum = 1 #sum of all ranks: my_rank has value of 0, so sum=1
 snd_buf = 1
-if (my_rank==1):
-    #help(MPI.COMM_WORLD.irecv)
-    print('----------------------------------------------------')
-    #help(MPI.COMM_WORLD.isend)
-    #help(MPI.COMM_WORLD.irecv())
-    #help(MPI.Status)
-    print('-------------------------------------------')
+
 for counter in range(0,size-1):
-    #recv=MPI.COMM_WORLD.irecv(source=left, tag =to_right, request=arr_request[0])
-    #req=MPI.COMM_WORLD.isend(snd_buf,dest=right,tag=to_right, request=arr_request[1])
     recv=MPI.COMM_WORLD.irecv(source=left, tag =to_right)
     req=MPI.COMM_WORLD.isend(snd_buf,dest=right,tag=to_right)
     req.waitall(requests=[recv])
 
     sum = sum + counter
 
-#print('my_rank:',my_rank,'Sum=',sum)
+print('my_rank:',my_rank,'Sum=',sum)
