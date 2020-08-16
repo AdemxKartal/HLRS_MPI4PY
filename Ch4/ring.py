@@ -25,8 +25,9 @@ status = MPI.Status()
 for counter in range(0,size):
     req=MPI.COMM_WORLD.isend(snd_buf,dest=right,tag=to_right)
     #req=MPI.COMM_WORLD.Isend([snd_buf, MPI.BYTE],dest=right,tag=to_right)
-    MPI.COMM_WORLD.recv(source=left, tag =to_right, status=status)
+    recv=MPI.COMM_WORLD.recv(source=left, tag =to_right, status=status)
     req.Wait()
+    print('recv value: ',recv)
     snd_buf = snd_buf+1
     sum = sum +snd_buf
 
