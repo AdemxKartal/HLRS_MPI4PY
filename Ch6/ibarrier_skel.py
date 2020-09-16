@@ -7,10 +7,8 @@ size = MPI.COMM_WORLD.Get_size()
 my_rank = MPI.COMM_WORLD.Get_rank()
 request = MPI.Request()
 
-import time
 
-#snd_rq = [req1,req2,req3,req4]
-#snd_rq=[]
+snd_rq=[]
 #in the role as sending process
 snd_finished=0
 number_of_dest=0 # only for verification, should be removed in real applications
@@ -21,7 +19,7 @@ number_of_dest=0 # only for verification, should be removed in real applications
 ib_finished=0
 number_of_recvs=0
 rcv_status=MPI.Status()
-snd_rq=[]
+
 round =0 #only for verification, should be removed in real applications
 
 dest = my_rank+1
@@ -30,7 +28,7 @@ if(dest>=0 and dest<size):
     snd_buf_A=1000*my_rank+dest
     snd_req1=MPI.COMM_WORLD.issend(obj=snd_buf_A,dest=dest,tag=222)
     snd_rq.append(snd_req1)
-    #print('A rank: ',my_rank,'sending message: ', snd_buf_A,'from ', my_rank, 'to',dest)
+    print('send: A rank: ',my_rank,'sending message: ', snd_buf_A,'from ', my_rank, 'to',dest)
     number_of_dest=number_of_dest+1
 
 dest = my_rank-2
@@ -38,7 +36,7 @@ if(dest>=0 and dest<size):
     snd_buf_B=1000*my_rank+dest
     snd_req2=MPI.COMM_WORLD.issend(obj=snd_buf_B,dest=dest,tag=222)
     snd_rq.append(snd_req2)
-    #print('A rank: ',my_rank,'sending message: ', snd_buf_A,'from ', my_rank, 'to',dest)
+    print('send: A rank: ',my_rank,'sending message: ', snd_buf_A,'from ', my_rank, 'to',dest)
     number_of_dest=number_of_dest+1
 
 dest=my_rank+4
@@ -46,7 +44,7 @@ if(dest>=0 and dest<size):
     snd_buf_C=1000*my_rank+dest
     snd_req3=MPI.COMM_WORLD.issend(obj=snd_buf_C,dest=dest,tag=222)
     snd_rq.append(snd_req3)
-    #print('A rank: ',my_rank,'sending message: ', snd_buf_A,'from ', my_rank, 'to',dest)
+    print('send: A rank: ',my_rank,'sending message: ', snd_buf_A,'from ', my_rank, 'to',dest)
     number_of_dest=number_of_dest+1
 
 dest =my_rank-7
@@ -55,34 +53,33 @@ if(dest>=0 and dest<size):
     snd_buf_D= 1000*my_rank+dest
     snd_req4=MPI.COMM_WORLD.issend(obj=snd_buf_D,dest=dest,tag=222)
     snd_rq.append(snd_req4)
-    #print('A rank: ',my_rank,'sending message: ', snd_buf_A,'from ', my_rank, 'to',dest)
+    print('send: A rank: ',my_rank,'sending message: ', snd_buf_A,'from ', my_rank, 'to',dest)
     number_of_dest=number_of_dest+1
 
 while(not ib_finished):
     rcv_flag = MPI.COMM_WORLD.iprobe(source=MPI.ANY_SOURCE,tag=222,status=None)
     if(rcv_flag):
         rcv_buf=MPI.COMM_WORLD.recv(source=MPI.ANY_SOURCE, tag =222, status=rcv_status)
-        #print('A rank: ',my_rank,'received message ', rcv_buf, 'from',rcv_status.source)
+        print('recv: A rank: ',my_rank,'received message ', rcv_buf, 'from',rcv_status.source)
         number_of_recvs=number_of_recvs+1
 
     if(not snd_finished):
         resultTestall=MPI.Request.testall(requests=snd_rq,statuses=None)
         snd_finished=resultTestall[0]
 
+        if(snd_finished):
+            ib_rq=MPI.COMM_WORLD.Ibarrier()
+
     if(snd_finished):
-        ib_rq=MPI.COMM_WORLD.Ibarrier()
-        print('type: ',type(ib_rq))
-    if(snd_finished):
-        #print('if statement test')
-        resultTest=ib_rq.test()
-        #resultTest= MPI.Request.test(status=None) #returns a tuple
-        #print('resultTest: ', resultTest)
-        ib_finished=resultTest[0]
-        #print('ib_finished: ', ib_finished)
-    #time.sleep(4)
+        resultTest=ib_rq.Test()
+        ib_finished=resultTest
+    if(ib_finished==True):
+        print('loop condition done')
+print('loop finished')
 
 
-total_number_of_dests=MPI.COMM_WORLD.reduce(sendobj=number_of_dest,op=MPI.SUM, root=0)
+#total=MPI.COMM_WORLD.reduce(1,root=0,op=MPI.SUM)
+total_number_of_dests=MPI.COMM_WORLD.reduce(number_of_dest, root=0,op=MPI.SUM)
 total_number_of_recvs=MPI.COMM_WORLD.reduce(sendobj=number_of_recvs, op =MPI.SUM, root=0)
 
 if(my_rank==0):
