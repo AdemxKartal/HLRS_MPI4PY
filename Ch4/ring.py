@@ -20,15 +20,15 @@ left=(my_rank-1+size)%size
 #   left = size - 1
 
 
-sum = 0 #sum of all ranks: my_rank has value of 0
+sum = 0
 snd_buf = my_rank
 for counter in range(0,size):
     status = MPI.Status()
     req=MPI.COMM_WORLD.issend(obj=snd_buf,dest=right,tag=to_right)
-    recv=MPI.COMM_WORLD.recv(source=left, tag =to_right, status=status)
+    recv_buf=MPI.COMM_WORLD.recv(source=left, tag =to_right, status=status)
     req.Wait()
-    snd_buf=recv
-    sum = sum + recv
+    snd_buf=recv_buf
+    sum = sum + recv_buf
 
 print('my_rank:',my_rank,'Sum=',sum)
 
