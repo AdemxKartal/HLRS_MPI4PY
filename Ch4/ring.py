@@ -20,7 +20,7 @@ left=(my_rank-1+size)%size
 #   left = size - 1
 
 
-sum = 0 #sum of all ranks: my_rank has value of 0, so sum=1
+sum = 0 #sum of all ranks: my_rank has value of 0
 snd_buf = my_rank
 for counter in range(0,size):
     status = MPI.Status()
