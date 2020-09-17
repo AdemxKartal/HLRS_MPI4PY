@@ -1,6 +1,7 @@
-from mpi4py import MPI
-#run with: mpiexec -n 2 python ring.py
+#run with: mpiexec -n 2 python3 ring.py
+#mpiexec --use-hwthread-cpus python3 ring.py
 
+from mpi4py import MPI
 status = MPI.Status()
 request = MPI.Request()
 size = MPI.COMM_WORLD.Get_size()
@@ -19,13 +20,15 @@ left=(my_rank-1+size)%size
 #   left = size - 1
 
 
-sum = 1 #sum of all ranks: my_rank has value of 0, so sum=1
-snd_buf = 1
-for counter in range(0,size-1):
+sum = 0 #sum of all ranks: my_rank has value of 0, so sum=1
+snd_buf = my_rank
+for counter in range(0,size):
     status = MPI.Status()
-    req=MPI.COMM_WORLD.isend(snd_buf,dest=right,tag=to_right)
+    req=MPI.COMM_WORLD.issend(obj=snd_buf,dest=right,tag=to_right)
     recv=MPI.COMM_WORLD.recv(source=left, tag =to_right, status=status)
     req.Wait()
-    sum = sum + counter
+    snd_buf=recv
+    sum = sum + recv
 
 print('my_rank:',my_rank,'Sum=',sum)
+
