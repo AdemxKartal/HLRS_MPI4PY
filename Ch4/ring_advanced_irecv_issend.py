@@ -37,7 +37,6 @@ for counter in range(0,size):
     recv_buf=recv.wait()
     MPI.Request.waitall(requests=arr_request,statuses=arr_status)
     snd_buf=recv_buf
-    snd_buf=recv_buf
     sum = sum + recv_buf
 
 print('my_rank:',my_rank,'Sum=',sum)
