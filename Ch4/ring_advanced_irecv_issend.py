@@ -1,6 +1,6 @@
 from mpi4py import MPI
-#run with: mpiexec -n 2 python ring.py
-
+#run with: mpiexec -n 2 python3 ring.py
+#mpiexec --use-hwthread-cpus python3 ring_advanced_irecv_issend.py
 status = MPI.Status()
 
 request = MPI.Request()
@@ -18,23 +18,27 @@ left=(my_rank-1+size)%size
 # left = my_rank - 1
 #if (left == -1):
 #   left = size - 1
-arr_status=[]
+
 arr_request=[]
+recv_status=MPI.Status()
 status1=MPI.Status()
 status2=MPI.Status()
+arr_status = [status1,status2]
 
-arr_status.append(status1)
-arr_status.append(status2)
+
 sum = 0
-snd_buf = 1
-
+snd_buf = my_rank
+recv_buf=None
 for counter in range(0,size):
-    recv_buf=MPI.COMM_WORLD.irecv(source=left, tag =to_right)
-    arr_request.append(recv_buf)
+    recv=MPI.COMM_WORLD.irecv(source=left, tag =to_right)
+    arr_request.append(recv)
     req=MPI.COMM_WORLD.isend(obj=snd_buf,dest=right,tag=to_right)
     arr_request.append(req)
-    req.waitall(requests=arr_request,statuses=arr_status)
-    sum = sum + counter
+    recv_buf=recv.wait()
+    MPI.Request.waitall(requests=arr_request,statuses=arr_status)
+    snd_buf=recv_buf
+    snd_buf=recv_buf
+    sum = sum + recv_buf
 
 print('my_rank:',my_rank,'Sum=',sum)
 
