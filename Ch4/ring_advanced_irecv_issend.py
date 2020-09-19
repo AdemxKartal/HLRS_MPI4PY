@@ -28,7 +28,7 @@ arr_status = [status1,status2]
 
 sum = 0
 snd_buf = my_rank
-recv_buf=None
+
 for counter in range(0,size):
     recv=MPI.COMM_WORLD.irecv(source=left, tag =to_right)
     arr_request.append(recv)
