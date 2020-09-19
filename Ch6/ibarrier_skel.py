@@ -13,7 +13,6 @@ snd_rq=[]
 snd_finished=0
 number_of_dest=0 # only for verification, should be removed in real applications
                    #         Caution: total_number_of_dests may be less than 4, see if-statements below
-##
 
 #in the role of receiving process
 ib_finished=0
