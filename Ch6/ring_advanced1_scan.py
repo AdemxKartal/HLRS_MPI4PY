@@ -11,7 +11,8 @@ print('sum: ', sum)
 token=None
 if(my_rank!=0):
     token= MPI.COMM_WORLD.recv(source=my_rank-1,tag=tag_ready, status=status)
-    print('PE: ',my_rank,'Sum = ',sum)
+
+print('PE: ',my_rank,'Sum = ',sum)
 
 if(my_rank!=size-1):
     MPI.COMM_WORLD.send(obj=token,dest=my_rank+1,tag=tag_ready)
