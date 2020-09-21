@@ -56,21 +56,21 @@ if(dest>=0 and dest<size):
     number_of_dest=number_of_dest+1
 
 while(not ib_finished):
-    rcv_flag = MPI.COMM_WORLD.iprobe(source=MPI.ANY_SOURCE,tag=222,status=None)
+    ______ = MPI.COMM_WORLD.iprobe(source=______,tag=_____,status=_____)
     if(rcv_flag):
         rcv_buf=MPI.COMM_WORLD.recv(source=MPI.ANY_SOURCE, tag =222, status=rcv_status)
         print('recv: A rank: ',my_rank,'received message ', rcv_buf, 'from',rcv_status.source)
         number_of_recvs=number_of_recvs+1
 
     if(not snd_finished):
-        resultTestall=MPI.Request.testall(requests=snd_rq,statuses=None)
-        snd_finished=resultTestall[0]
+        _______=MPI.Request.test____(requests=_____,statuses=_____) #describe in slides --> can be confusing that the function is rteurning an tuple, explain the decleation of the next line where you assign the return value of the function to a variable
+        snd_finished=______[0]
 
-        if(snd_finished):
-            ib_rq=MPI.COMM_WORLD.Ibarrier()
+        if(_________):
+            ______=MPI._____.______()
 
     if(snd_finished):
-        resultTest=ib_rq.Test()
+        resultTest=______.Test() # explain this line in slides
         ib_finished=resultTest
     if(ib_finished==True):
         print('loop condition done')
