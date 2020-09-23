@@ -1,8 +1,6 @@
 #mpiexec --use-hwthread-cpus python3 ring_tworings.py
 from mpi4py import MPI
-status = MPI.Status()
 to_right=201
-request = MPI.Request()
 world_size = MPI.COMM_WORLD.Get_size()
 my_world_rank = MPI.COMM_WORLD.Get_rank()
 
