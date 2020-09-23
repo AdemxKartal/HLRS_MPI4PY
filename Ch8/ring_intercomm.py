@@ -41,7 +41,7 @@ if(mycolor==0):
 else:
     remote_leader = 0
 
-Create_intercomm=MPI.Intracomm.Create_intercomm
+
 inter_comm= MPI.Intracomm.Create_intercomm(sub_comm,0,MPI.COMM_WORLD,remote_leader,0)
 
 my_inter_rank = inter_comm.Get_rank()
