@@ -1,6 +1,5 @@
 #mpiexec --use-hwthread-cpus python3 ring_intercomm.py
 from mpi4py import MPI
-status = MPI.Status()
 to_right=201
 
 world_size = MPI.COMM_WORLD.Get_size()
