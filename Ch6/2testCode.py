@@ -1,5 +1,5 @@
 from mpi4py import MPI
-#run with: mpiexec -n 2 python ring.py
+#run with: mpiexec -n 2 python3 2testCode.py
 #mpiexec --use-hwthread-cpus python 2testCode.py
 
 status = MPI.Status()
@@ -19,16 +19,23 @@ left=(my_rank-1+size)%size
 #if (left == -1):
 #   left = size - 1
 
-
+ib_finished=0
 sum = 1 #sum of all ranks: my_rank has value of 0, so sum=1
 snd_buf = 10
 for counter in range(0,size-1):
     status = MPI.Status()
     req=MPI.COMM_WORLD.isend(snd_buf,dest=right,tag=to_right)
-    recv=MPI.COMM_WORLD.recv(source=left, tag =to_right, status=status)
-    if(my_rank==0):
-        print('my_rank: ', my_rank)
-        print('recv: ',recv)
+    recv1=MPI.COMM_WORLD.recv(source=left, tag =to_right, status=status)
+    #recv2=MPI.COMM_WORLD.recv(source=left, tag =to_right, status=status)
+    rcv_flag = MPI.COMM_WORLD.iprobe(source=MPI.ANY_SOURCE,tag=to_right,status=None)
+    snd_finished= MPI.Request.testall(request=[recv1],status=None)
+    #print(snd_finished)
+    #if(rcv_flag):
+    help(MPI.Request.testall)
+        #print('rcv_flag: ',rcv_flag,'from source: ', status.source)
+    #print('type of ib_finished[0] ', type(ib_finished[0]), 'value of ib_finished[0]: ', ib_finished[0])
+        #print('recv: ',recv, 'status',status.Get_source())
+        #print('statusss: ', status.source)
     req.Wait()
     sum = sum + counter
 
