@@ -15,7 +15,7 @@ dims[0]=size
 periods[0]=1
 reorder = True
 
-new_comm=MPI.Intracomm.Create_cart(MPI.COMM_WORLD,dims,periods,True)
+new_comm=MPI.Intracomm.Create_cart(MPI.COMM_WORLD,dims,periods,reorder)
 my_rank= new_comm.Get_rank()
 left_right= MPI.Cartcomm.Shift(new_comm,0,1)
 
