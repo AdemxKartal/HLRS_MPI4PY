@@ -22,19 +22,32 @@ MPI.Group.Free(grp_world)
 
 sum = 0
 snd_buf = my_rank
-
+snd_buf = np.zeros(1,dtype='i')
+#snd_buf=[]
+#snd_buf.append(2)
+#snd_buf.append(3)
 #Put(self, origin, int target_rank, target=None)
 for counter in range(0,size):
     #check if MPI.Win --> possible
-    MPI.Win.Post(win,grp_left,MPI.MODE_NOSTORE)
+    win.Post(grp_left,MPI.MODE_NOSTORE)
     MPI.Win.Start(win,grp_right,0)
-    #check von target
-    win.Put(snd_buf,right)
-    #MPI.Win.Put(win,snd_buf,right,None)
-    MPI.Win.Complete(win)
-    MPI.Win.Wait(win)
+    win.Put(snd_buf,right,None)
+    win.Complete()
+    win.Wait()
     snd_buf=rcv_buf
     sum= sum + rcv_buf
 
 print('my_rank:',my_rank,'Sum=',sum)
+
+#def Put(self, origin, int target_rank, target=None):
+ #       """
+  #      Put data into a memory window on a remote process.
+   #     """
+    #    cdef _p_msg_rma msg = message_rma()
+     #   msg.for_put(origin, target_rank, target)
+      #  with nogil: CHKERR( MPI_Put(
+       #     msg.oaddr, msg.ocount, msg.otype,
+        #    target_rank,
+         #   msg.tdisp, msg.tcount, msg.ttype,
+          #  self.ob_mpi) )
 
