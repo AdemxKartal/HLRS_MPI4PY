@@ -18,7 +18,6 @@ left=(my_rank-1+size)%size
 #if (left == -1):
 #   left = size - 1
 
-
 sum = 0
 snd_buf = my_rank
 for counter in range(0,size):
