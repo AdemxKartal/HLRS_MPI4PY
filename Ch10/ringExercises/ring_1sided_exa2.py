@@ -12,8 +12,6 @@ left=(my_rank-1+size)%size
 left_ranks= [left]
 right_ranks =[right]
 
-#rcv_buf= [sizeOfInt]
-#snd_buf=[sizeOfInt]
 rcv_buf=np.zeros(1,dtype='int')
 snd_buf=np.zeros(1,dtype='int')
 win=MPI.Win.Create(rcv_buf,disp_unit=sizeOfInt, comm=MPI.COMM_WORLD) # winows size just 1, is that okay?
