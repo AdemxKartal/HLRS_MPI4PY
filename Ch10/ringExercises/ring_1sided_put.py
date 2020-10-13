@@ -11,16 +11,20 @@ right = (my_rank+1)%size
 left=(my_rank-1+size)%size
 
 rcv_buf=np.zeros(sizeOfInt,dtype='int')
+
 snd_buf=np.zeros(sizeOfInt,dtype='int')
+
 win=MPI.Win.Create(rcv_buf,disp_unit=sizeOfInt, comm=MPI.COMM_WORLD)
 
 #Create(type cls, memory, int disp_unit=1, Info info=INFO_NULL, Intracomm comm=COMM_SELF)
 sum = 0
+snd_buf[0]=my_rank
+#snd_buf.append(my_rank)
 #Win.Put(self, origin, int target_rank, target=None)
 for counter in range(0,size):
     win.Fence(MPI.MODE_NOSTORE|MPI.MODE_NOPRECEDE)
     win.Put(snd_buf,right,None)
     win.Fence(MPI.MODE_NOSTORE|MPI.MODE_NOPUT|MPI.MODE_NOSUCCEED)
-    snd_buf=rcv_buf
-    sum= snd_buf+rcv_buf
+    snd_buf[0]=rcv_buf[0]
+    sum= sum+rcv_buf[0]
 print('my_rank:',my_rank,'Sum=',sum)
