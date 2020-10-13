@@ -14,23 +14,23 @@ right_ranks =[right]
 
 #rcv_buf= [sizeOfInt]
 #snd_buf=[sizeOfInt]
-rcv_buf=np.zeros(sizeOfInt,dtype='int')
-snd_buf=np.zeros(sizeOfInt,dtype='int')
-win=MPI.Win.Create(rcv_buf,disp_unit=sizeOfInt, comm=MPI.COMM_WORLD)
-print('rcv_buf: ', rcv_buf)
+rcv_buf=np.zeros(1,dtype='int')
+snd_buf=np.zeros(1,dtype='int')
+win=MPI.Win.Create(rcv_buf,disp_unit=sizeOfInt, comm=MPI.COMM_WORLD) # winows size just 1, is that okay?
+
 grp_world=MPI.COMM_WORLD.Get_group()
 grp_left=MPI.Group.Incl(grp_world,left_ranks)
 grp_right=MPI.Group.Incl(grp_world,right_ranks)
 MPI.Group.Free(grp_world)
-
 sum = 0
+snd_buf[0]=my_rank
 for counter in range(0,size):
     win.Post(grp_left,MPI.MODE_NOSTORE)
     win.Start(grp_right,0)
     win.Put(snd_buf,right,None)
     win.Complete()
     win.Wait()
-    snd_buf=rcv_buf
-    sum= sum + rcv_buf
+    snd_buf[0]=rcv_buf[0]
+    sum= sum + rcv_buf[0]
 
 print('my_rank:',my_rank,'Sum=',sum)
