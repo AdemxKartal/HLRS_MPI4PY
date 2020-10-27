@@ -11,9 +11,10 @@ arrSize= 10 #just for testing on my computer
 sizeArrType = 8
 
 # --------------> 2 <-------------
-arr= np.zeros(arrSize,dtype='int32')
+MPI.COMM_WORLD.Split()
 
-# --------------> 3 <-------------1
+#Split(self, int color=0, int key=0)
+# --------------> 3 <-------------
 for it in range(0,3):
     if(rank_world==0):
         for counter2 in range(0,arrSize):
@@ -24,4 +25,4 @@ for it in range(0,3):
     for counter3 in range(0,arrSize):
         sum=sum+arr[counter3]
     # --------------> 6 <-------------
-    print('it: ', it,' rank (world): ',rank_world,' sum from', it,'to ', arrSize-+it, ' sum = ',sum)
+    print('it: ', it,' rank (world): ',rank_world,' sum from', it,'to ', arrSize-1+it, ' sum = ',sum)
