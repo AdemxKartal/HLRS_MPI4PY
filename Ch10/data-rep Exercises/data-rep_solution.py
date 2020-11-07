@@ -11,7 +11,6 @@ arrSize= 10 #just for testing on my computer
 sizeArrType = 8
 arr = np.zeros(arrSize, dtype='int32')
 # --------------> 2 <-------------
-MPI.COMM_WORLD.Split()
 comm_shm= MPI.COMM_WORLD.Split(color=MPI.COMM_TYPE_SHARED, key=0)
 size_shm = comm_shm.Get_size()
 rank_shm=comm_shm.Get_rank()
