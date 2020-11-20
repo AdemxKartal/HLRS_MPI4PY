@@ -1,3 +1,9 @@
 1. In Ring Exercises the window size is 1, in the C examples its 4
 2. data-rep_base.c: check if the definiton of arr=(arrType*) malloc(arrSize*sizeof(arrType)) is implemented right
 3. data_rep_base.c : the for loops are not the pythonic way --> should changed?
+4. data-rep_solution.py : no arrsize_ ? problem??:
+    because in C we use "  MPI_Win_shared_query( win, 0, &arrSize_, &disp_unit, &arr );" and arrSize_ is a Output
+    in Python we use "arr= MPI.Win.Shared_query(win,0) #arr is a tuple: arr[0] = tomemory(base,size) arr[1] =disp_unit"
+5. ring_1sided_store_win_alloc_shred.py: substituiton of MPI_Put not possible?
+    In C it solved by: *(rcv_buf_ptr+(right-my_rank)) = snd_buf; , that does the same like MPI_Put(&snd_buf, 1, MPI_INT, right, (MPI_Aint) 0, 1, MPI_INT, win);
+    how to do this in python?

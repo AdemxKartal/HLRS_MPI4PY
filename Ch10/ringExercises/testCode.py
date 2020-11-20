@@ -11,6 +11,6 @@ snd_buf=np.zeros(1,dtype='int')
 snd_buf[0]=10
 
 if(my_rank==0):
-    print('snd_buf: ', snd_buf,'type: ', type(snd_buf))
+    help(MPI.Alloc_mem)
     #help(MPI.Win.Put)
 
