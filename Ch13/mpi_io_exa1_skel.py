@@ -1,5 +1,5 @@
-#run with: mpiexec -n 2 python3 mpi_io_exa1.py
-#wxb4PdTF7CH8Ftd
+#run with: mpiexec -n 2 python3 mpi_io_exa1_skel.py
+
 from mpi4py import MPI
 
 size = MPI.COMM_WORLD.Get_size()

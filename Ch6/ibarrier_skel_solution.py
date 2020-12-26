@@ -1,4 +1,4 @@
-#mpiexec -n 2 python3 ibarrirer_skel.py
+#mpiexec -n 2 python3 ibarrirer_skel_solution.py
 from mpi4py import MPI
 status = MPI.Status()
 tag_ready= 7781
