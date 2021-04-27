@@ -1,4 +1,4 @@
-#mpiexec -n 2 python ping_pong_advanced2_send.py
+:q:#mpiexec -n 2 python ping_pong_advanced_send.py
 from mpi4py import MPI
 import sys
 proc_A =0
