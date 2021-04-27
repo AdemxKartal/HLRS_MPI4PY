@@ -25,7 +25,6 @@ for counter in range(0,size):
     req=MPI.COMM_WORLD.send(obj=snd_buf,dest=right,tag=to_right)
     #WRONG programm, because if MPI_Send is implemented with a synchronous communication protocol then this programm will be deadlock!!!
     recv_buf=MPI.COMM_WORLD.recv(source=left, tag =to_right, status=status)
-    snd_buf=recv_buf
     sum = sum + snd_buf
 
 
