@@ -1,5 +1,5 @@
-#run with: mpiexec -n 2 python ping_pong.py
-# mpiexec --use-hwthread-cpus python3 ping_pong.py
+#run with: mpiexec -n 2 python pingpong.py
+# mpiexec --use-hwthread-cpus python3 pingpong.py
 
 from mpi4py import MPI
 buffer= 1
