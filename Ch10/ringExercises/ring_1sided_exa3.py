@@ -1,5 +1,5 @@
-#run with: mpiexec -n 2 python3 ring_1sided_exa2.py
-#mpiexec --use-hwthread-cpus python3 ring_1sided_exa2.py
+#run with: mpiexec -n 2 python3 ring_1sided_exa3.py
+#mpiexec --use-hwthread-cpus python3 ring_1sided_exa3.py
 from mpi4py import MPI
 import numpy as np
 size = MPI.COMM_WORLD.Get_size()
