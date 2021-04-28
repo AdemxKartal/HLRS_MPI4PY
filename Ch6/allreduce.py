@@ -1,5 +1,5 @@
-#mpiexec -n 2 python3 ring_allreduce.py
-#mpiexec --use-hwthread-cpus python3 ring_allreduce.py
+#mpiexec -n 2 python3 allreduce.py
+#mpiexec --use-hwthread-cpus python3 allreduce.py
 from mpi4py import MPI
 status = MPI.Status()
 tag_ready= 7781
